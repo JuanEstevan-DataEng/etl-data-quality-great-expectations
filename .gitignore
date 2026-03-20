@@ -1,0 +1,23 @@
+data/raw/*
+data/processed/*
+
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Entornos virtuales
+venv/
+.venv/
+env/
+.env
+
+# --- Jupyter / Notebooks ---
+*ipynb
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
