@@ -22,3 +22,5 @@ env/
 */.ipynb_checkpoints/*
 
 GEMINI.md
+
+.vscode
