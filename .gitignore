@@ -1,26 +1,38 @@
+# ── Generated data (pipeline outputs — never commit these) ────────────────────
 data/raw/*
-data/processed/*
+data/processed/
+data/star_schema/
 
+# Keep placeholder files that preserve empty folders in git
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 
-# --- Python ---
+# ── Generated reports ─────────────────────────────────────────────────────────
+reports/*.png
+reports/*.md
+
+# ── Great Expectations generated artifacts ────────────────────────────────────
+# HTML Data Docs and validation result JSONs are rebuilt on every run
+gx/uncommitted/data_docs/
+gx/uncommitted/validations/
+# Suite JSONs are regenerated programmatically by validate_input/validate_output
+gx/expectations/
+
+# ── Python ────────────────────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
-.Python
-
-# Entornos virtuales
-venv/
 .venv/
-env/
-.env
+venv/
 
-# --- Jupyter / Notebooks ---
-.ipynb_checkpoints
-*/.ipynb_checkpoints/*
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
 
-GEMINI.md
+# ── IDE / OS ──────────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+.DS_Store
 
-.vscode
+.*
+*.md
