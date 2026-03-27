@@ -12,11 +12,7 @@ reports/*.png
 reports/*.md
 
 # ── Great Expectations generated artifacts ────────────────────────────────────
-# HTML Data Docs and validation result JSONs are rebuilt on every run
-gx/uncommitted/data_docs/
-gx/uncommitted/validations/
-# Suite JSONs are regenerated programmatically by validate_input/validate_output
-gx/expectations/
+gx/
 
 # ── Python ────────────────────────────────────────────────────────────────────
 __pycache__/
