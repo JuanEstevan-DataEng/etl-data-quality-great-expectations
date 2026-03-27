@@ -46,7 +46,10 @@ def write_to_sqlite(tables: dict, db_path: Path) -> None:
     # connect() creates the file if it doesn't exist yet
     conn = sqlite3.connect(db_path)
 
-    for name, df in tables.items():
+    # Load dimensions first, then fact table (referential integrity order)
+    load_order = ["dim_date", "dim_product", "dim_customer", "dim_location", "fact_sales"]
+    for name in load_order:
+        df = tables[name]
         df.to_sql(name, conn, if_exists="replace", index=False)
         print(f"  Loaded {len(df):>5} rows → table '{name}'")
 

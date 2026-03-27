@@ -375,19 +375,21 @@ The resulting file `data/processed/data_warehouse.db` can be opened with any SQL
 
 ### Task i — Business Analysis (`analysis.py`)
 
-**Responsibility:** answer concrete business questions by querying the data warehouse and producing visualizations.
+**Responsibility:** answer the question *"How are sales evolving over time, across products, customers, and regions?"* by querying the SQLite data warehouse and producing KPI visualizations.
 
-Seven PNG charts are generated in `reports/`, each backed by a SQL query joining `fact_sales` with the relevant dimension:
+Charts 1–6 query `fact_sales` joined with the relevant dimension table. Chart 1 also loads the raw CSV to make the cleaning impact visible. Chart 7 uses the DQ scores returned directly by Tasks b and f.
 
-| Chart | Query | Business Question |
-|-------|-------|-------------------|
-| `chart1_monthly_revenue.png` | `GROUP BY month` | Which months had the highest revenue? (BO-2) |
-| `chart2_revenue_by_product.png` | `JOIN dim_product` | Which product generates the most revenue? (BO-3) |
-| `chart3_revenue_by_country.png` | `JOIN dim_location` | How is revenue distributed across markets? (BO-3) |
-| `chart4_avg_price_by_product.png` | `AVG(price) GROUP BY product` | What is the average ticket per product? (BO-1) |
-| `chart5_sales_by_day_of_week.png` | `JOIN dim_date GROUP BY day_of_week` | On which days of the week do most sales occur? (BO-2) |
-| `chart6_revenue_bin_distribution.png` | `GROUP BY revenue_bin` | What share of transactions are high-value? (BO-1 / BO-4) |
-| `chart7_top10_customers.png` | `JOIN dim_customer LIMIT 10` | Who are the most valuable customers? (BO-4) |
+Seven PNG charts are generated in `reports/`:
+
+| Chart | BO | Type | KPI / Business Question |
+|-------|----|------|-------------------------|
+| `chart1_revenue_by_country_impact.png` | BO-1 | Grouped bar | Total revenue per country — Raw vs. Clean. Shows how duplicates and negative values inflated revenue before cleaning. |
+| `chart2_revenue_boxplot_by_product.png` | BO-1 | Box plot | `total_revenue` distribution per product with outliers highlighted. Reveals the spread and anomalies within each category. |
+| `chart3_monthly_revenue_trend.png` | BO-2 | Line chart | Monthly revenue trend Jan–Dec 2023. Uses the `month` column parsed from `dim_date`. |
+| `chart4_transactions_by_day_of_week.png` | BO-2 | Bar chart | Transaction count by day of the week. Uses `day_of_week` from `dim_date`. |
+| `chart5_top3_products_by_revenue.png` | BO-3 | Horizontal bar | Top 3 products by total revenue, sorted descending. |
+| `chart6_revenue_share_by_country.png` | BO-3 | Pie chart | Revenue share by country using the standardized canonical names from `dim_location`. |
+| `chart7_dq_score_comparison.png` | BO-4 | Side-by-side bar | DQ Score before cleaning (10%) vs. after cleaning (100%), sourced from the Task b and Task f validation results. |
 
 ---
 
