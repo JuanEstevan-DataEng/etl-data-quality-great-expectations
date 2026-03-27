@@ -202,6 +202,35 @@ def save_report(counts, report_path=None):
 
     # c.2 Policy proposal table
     md += "## c.2 Data Quality Policy Proposal\n\n"
+
+    # Severity classification criteria — makes the report self-contained
+    md += "### Severity Classification Criteria\n\n"
+    md += (
+        "Each policy is assigned a severity level based on two factors: "
+        "whether the issue **directly corrupts a numeric calculation**, "
+        "and whether it **makes an entire analysis impossible** vs. degrading a subset.\n\n"
+    )
+    md += "| Severity | Classification Rule | Example consequence if violated |\n"
+    md += "|----------|--------------------|---------------------------------|\n"
+    md += (
+        "| **Critical** | The issue produces mathematically wrong financial figures. "
+        "The pipeline must not proceed if this fails. "
+        "| Duplicate invoice inflates total revenue; negative price produces negative revenue. |\n"
+    )
+    md += (
+        "| **High** | The issue makes an entire analytical dimension unreliable "
+        "(regional, temporal, or customer analysis), but does not corrupt numeric totals. "
+        "| Inconsistent country names split one market into multiple groups; "
+        "future dates distort monthly trends. |\n"
+    )
+    md += (
+        "| **Medium** | The issue degrades quality for a subset of records "
+        "but does not invalidate the global analysis. "
+        "| A misspelled product name loses those sales from product reports "
+        "but does not affect total revenue. |\n\n"
+    )
+
+    md += "### Policies\n\n"
     md += "| # | Policy | GE Expectation | Severity | Addresses (BO) |\n"
     md += "|---|--------|----------------|----------|----------------|\n"
     for _, row in policies_df.iterrows():

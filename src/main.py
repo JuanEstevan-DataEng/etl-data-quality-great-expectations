@@ -201,7 +201,7 @@ def main():
 
     # ── Task f: Output validation ─────────────────────────────────────────────
     from validate_output import run as task_f
-    task_f(
+    _comparison, dq_score_output = task_f(
         transform_path=TRANSFORM_PATH,
         gx_root=GX_ROOT,
         context=gx_context,
@@ -226,10 +226,15 @@ def main():
     )
 
     # ── Task i: Business analysis ─────────────────────────────────────────────
+    # raw_path is passed so Chart 1 can compare revenue before vs. after cleaning.
+    # dq_score_input / dq_score_output come from Tasks b and f respectively.
     from analysis import run as task_i
     task_i(
         db_path=DB_PATH,
         reports_dir=REPORTS_DIR,
+        raw_path=RAW_PATH,
+        dq_score_input=dq_score_input,
+        dq_score_output=dq_score_output,
     )
 
     print("\n" + "=" * 70)
