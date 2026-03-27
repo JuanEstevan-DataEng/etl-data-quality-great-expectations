@@ -15,9 +15,15 @@ Covers all 6 quality dimensions:
   - Timeliness    (dates within expected range)
 """
 
+import datetime
 import pandas as pd
 import great_expectations as gx
 from great_expectations.core.expectation_configuration import ExpectationConfiguration
+from great_expectations.core.run_identifier import RunIdentifier
+from great_expectations.data_context.types.resource_identifiers import (
+    ExpectationSuiteIdentifier,
+    ValidationResultIdentifier,
+)
 from pathlib import Path
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
@@ -194,6 +200,20 @@ def run_validation(context, batch_request):
     )
 
     result = validator.validate()
+
+    # Persist the result to the GE validations store so Data Docs can display it.
+    # validator.validate() runs in-memory only; without this step the web UI
+    # shows the suite page but no validation run results.
+    run_id = RunIdentifier(
+        run_name=SUITE_NAME,
+        run_time=datetime.datetime.now(datetime.timezone.utc),
+    )
+    result_id = ValidationResultIdentifier(
+        expectation_suite_identifier=ExpectationSuiteIdentifier(SUITE_NAME),
+        run_id=run_id,
+        batch_identifier="retail_raw",
+    )
+    context.validations_store.set(result_id, result)
 
     # Build a summary table with each expectation's result
     rows = []

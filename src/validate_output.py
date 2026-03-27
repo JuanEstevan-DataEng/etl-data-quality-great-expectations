@@ -13,9 +13,15 @@ Two types of expectations are included:
 Deliverable: comparison table (raw pass % vs clean pass %) + DQ Scores
 """
 
+import datetime
 import pandas as pd
 import great_expectations as gx
 from great_expectations.core.expectation_configuration import ExpectationConfiguration
+from great_expectations.core.run_identifier import RunIdentifier
+from great_expectations.data_context.types.resource_identifiers import (
+    ExpectationSuiteIdentifier,
+    ValidationResultIdentifier,
+)
 from pathlib import Path
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
@@ -156,6 +162,18 @@ def run_and_compare(context, batch_request, input_summary, dq_score_input):
         expectation_suite_name=OUTPUT_SUITE
     )
     result = validator.validate()
+
+    # Persist to validations store so Data Docs shows the run results page.
+    run_id = RunIdentifier(
+        run_name=OUTPUT_SUITE,
+        run_time=datetime.datetime.now(datetime.timezone.utc),
+    )
+    result_id = ValidationResultIdentifier(
+        expectation_suite_identifier=ExpectationSuiteIdentifier(OUTPUT_SUITE),
+        run_id=run_id,
+        batch_identifier="retail_transformed",
+    )
+    context.validations_store.set(result_id, result)
 
     # Build a dict of output results keyed by (expectation_type, column)
     output_results = {}
