@@ -16,6 +16,7 @@ All file paths are defined here and passed to each module.
 No module needs to know where the project root is.
 """
 
+import os
 import sys
 from pathlib import Path
 
@@ -97,7 +98,7 @@ data_docs_sites:
       class_name: DefaultSiteIndexBuilder
 
 anonymous_usage_statistics:
-  enabled: true
+  enabled: false
 """
 
 
@@ -248,6 +249,6 @@ def main():
     print(f"  Data Docs     → {GX_ROOT}/uncommitted/data_docs/local_site/index.html")
     print("=" * 70)
 
-
 if __name__ == "__main__":
     main()
+    os._exit(0)

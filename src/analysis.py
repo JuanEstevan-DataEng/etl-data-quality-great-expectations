@@ -21,6 +21,8 @@ uses the DQ scores returned by validate_input and validate_output).
 
 import sqlite3
 import pandas as pd
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 from pathlib import Path
