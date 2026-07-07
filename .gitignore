@@ -32,3 +32,8 @@ venv/
 
 .*
 *.md
+!README.md
+
+# Assignment statements (course material) and scratch notes — not published
+*.pdf
+logica-lab4.txt
