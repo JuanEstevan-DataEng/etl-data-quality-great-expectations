@@ -425,11 +425,33 @@ The raw input dataset (`retail_etl_dataset.csv`) had 8 documented quality proble
 | Unique customers | 500 |
 | Products in the catalog | 8 |
 
+### Business KPI Charts
+
+The `analysis.py` step (Task i) generates the following charts from the SQLite data warehouse:
+
+| Revenue impact by country | Revenue distribution by product |
+|---|---|
+| ![Revenue by country](reports/chart1_revenue_by_country_impact.png) | ![Revenue boxplot by product](reports/chart2_revenue_boxplot_by_product.png) |
+
+| Monthly revenue trend | Transactions by day of week |
+|---|---|
+| ![Monthly revenue trend](reports/chart3_monthly_revenue_trend.png) | ![Transactions by day of week](reports/chart4_transactions_by_day_of_week.png) |
+
+| Top 3 products by revenue | Revenue share by country |
+|---|---|
+| ![Top 3 products by revenue](reports/chart5_top3_products_by_revenue.png) | ![Revenue share by country](reports/chart6_revenue_share_by_country.png) |
+
+**Data-quality score — before vs. after the pipeline:**
+
+![DQ score comparison](reports/chart7_dq_score_comparison.png)
+
 ---
 
 ## 8. Output Files
 
-All output files are excluded from version control (see `.gitignore`). They are regenerated every time `python src/main.py` is executed.
+Generated data files (CSVs, the SQLite DW, GE Data Docs) are excluded from version control and
+regenerated every time `python src/main.py` is executed. The business KPI charts under `reports/`
+**are** versioned so they render in this README.
 
 | File | Description |
 |------|-------------|

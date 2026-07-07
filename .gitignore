@@ -9,6 +9,8 @@ data/star_schema/
 
 # ── Generated reports ─────────────────────────────────────────────────────────
 reports/*.png
+# Keep the business KPI charts so they render in the README
+!reports/chart*.png
 reports/*.md
 
 # ── Great Expectations generated artifacts ────────────────────────────────────
